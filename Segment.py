@@ -184,7 +184,7 @@ def Make_hyp (hashtag, my_dict):
 
 def segmentation_test(splitted, joined):
 
-	my_dict = Dict_creator.Dict_form('/home/corra/Documents/VKR/zaliznjak.txt')
+	my_dict = Dict_creator.Dict_form('zaliznjak.txt')
 	print('Dictionary was successfuly formed!')
 	
 	s = open(splitted)
@@ -205,6 +205,6 @@ def segmentation_test(splitted, joined):
 	print("hashtags processed: ",total, " \n hashtags splitted correctly: ", success, "\n occurancy: ", (success/total)*100, "% \n")
 
 
-segmentation_test('/home/corra/Documents/VKR/Script/splittedHashtagsTest.txt', '/home/corra/Documents/VKR/Script/joinedHashtagsTest.txt')
+segmentation_test('splittedHashtagsTest.txt', 'joinedHashtagsTest.txt')
 
 	
