@@ -19,7 +19,9 @@ def Dict_form(dict_file):
 				# lemm = [stem, ending]
 				my_dict = add_too_dict(my_dict, lemm)
 	f.close()
-	return my_dict			
+	return my_dict
+#d = Dict_form('/home/corra/Documents/VKR/zaliznjak.txt')
+#print(d['з']['за'])				
 
 def add_too_dict(my_dict, lemm):
 	if not(lemm[0][0] in my_dict.keys()):

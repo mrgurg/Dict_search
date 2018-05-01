@@ -27,8 +27,8 @@ def methric_count(segmentation_list):
 		sent = Sentence(line, Dictionary('ru'), po)
 		sent.parse()
 
-		link_rate = clg.sentence_num_linkages_found(sent._obj)
-
+		link_rate = sent.null_count()
+ 
 		while {'text' : ' '} in grammar_information:
 			grammar_information.pop(grammar_information.index({'text' : ' '}))
 		for info in grammar_information:
@@ -51,8 +51,3 @@ def methric_count(segmentation_list):
 		methric_list.append([link_rate, unknown_words, functional_words, number_of_words])
 
 	return methric_list 
-
-
-
-
-print(methric_count(['закрыт нам путь проверенных орбит']))

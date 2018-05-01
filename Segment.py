@@ -82,15 +82,12 @@ def Make_hyp (hashtag, my_dict):
 		word_hyp[i] = [word_hyp[i]]
 	
 	flag = True
-	#flag = False if all hypotheses are completed
-	#
 
 	while (flag):
-		
 		flag = False 
 		it = 0
-		while it < len(word_hyp):
-			#print(word_hyp)			
+		
+		while it < len(word_hyp):			
 			if (len(word_hyp[it])>6) or (unknown_count[it] > 3):
 				word_hyp.pop(it)
 				unknown_count.pop(it)
@@ -111,8 +108,7 @@ def Make_hyp (hashtag, my_dict):
 							word_hyp.append(boof)
 							unknown_count.append(0)
 							flag = True
-					#print(substring)
-					#print(boof)
+
 					unknown_finish = 0
 					if first_word_hyp_existing(substring, my_dict) == []:
 						if not (substring[0] in alphabet):
@@ -126,8 +122,7 @@ def Make_hyp (hashtag, my_dict):
 							word_hyp[it].append(substring[:symb_seq])
 							substring = substring[symb_seq:]
 							flag = True
-
-							
+		
 						else:
 							
 							first_variant = True
@@ -164,11 +159,9 @@ def Make_hyp (hashtag, my_dict):
 									unknown_count.append(unknown_count[it]+1)
 								elif (boof in word_hyp):
 									word_hyp.pop(it)
-									it-=1 
-									
+									it-=1 		
 										
 							substring = substring[unknown_finish:]
-
 					else:			
 								
 						if not (ibegin+unknown_finish >= len(hashtag)):
@@ -182,16 +175,9 @@ def Make_hyp (hashtag, my_dict):
 								if not(boof2 in word_hyp):
 									word_hyp.append(boof2)
 									unknown_count.append(unknown_count[it])
-					
 
 			it+=1
-
-				#print(word_hyp)
-				#print(unknown_count)
-				
-			
-
-									
+						
 	segmentation = []
 	for sublist in word_hyp:
 		segmentation.append('')
@@ -200,8 +186,9 @@ def Make_hyp (hashtag, my_dict):
 		segmentation[len(segmentation)-1] = segmentation[len(segmentation)-1][:len(segmentation[len(segmentation)-1])-1]
 	return segmentation
 
-
-# print(Make_hyp('22мая2017г', Dict_creator.Dict_form('/home/corra/Documents/VKR/zaliznjak.txt')))
+# li = Dict_creator.Dict_form('/home/corra/Documents/VKR/zaliznjak.txt')
+# h = Make_hyp('мамамылараму', li)
+# print( Methrics.methric_count(h), h )
 
 
 def segmentation_test(splitted, joined):
@@ -230,6 +217,6 @@ def segmentation_test(splitted, joined):
 	print("hashtags processed: ",total, " \n hashtags splitted correctly: ", success, "\n occurancy: ", (success/total)*100, "% \n")
 
 
-segmentation_test('/home/corra/Documents/VKR/splittedHashtagsTest.txt', '/home/corra/Documents/VKR/joinedHashtagsTest.txt')
+# segmentation_test('/home/corra/Documents/VKR/splittedHashtagsTest.txt', '/home/corra/Documents/VKR/joinedHashtagsTest.txt')
 
 	
