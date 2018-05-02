@@ -86,7 +86,7 @@ def Make_hyp (hashtag, my_dict):
 	while (flag):
 		flag = False 
 		it = 0
-		
+
 		while it < len(word_hyp):			
 			if (len(word_hyp[it])>6) or (unknown_count[it] > 3):
 				word_hyp.pop(it)
@@ -101,13 +101,13 @@ def Make_hyp (hashtag, my_dict):
 					
 				if ibegin < len(hashtag):
 					substring = hashtag[ibegin:]
-					if unknown_count[it] == 0:
-						boof = word_hyp[it][:]
-						boof.append(substring)
-						if not (boof in word_hyp):
-							word_hyp.append(boof)
-							unknown_count.append(0)
-							flag = True
+					# if unknown_count[it] == 0:
+					# 	boof = word_hyp[it][:]
+					# 	boof.append(substring)
+					# 	if not (boof in word_hyp):
+					# 		word_hyp.append(boof)
+					# 		unknown_count.append(0)
+					# 		flag = True
 
 					unknown_finish = 0
 					if first_word_hyp_existing(substring, my_dict) == []:
@@ -138,10 +138,14 @@ def Make_hyp (hashtag, my_dict):
 												digit_started = True
 
 											if (first_variant):
-												first_variant = False
+												
 												mem = word_hyp[it][:]
-												word_hyp[it].append(substring[:unknown_finish])
-												unknown_count[it]+=1
+												check = mem[:]
+												check.append(substring[:unknown_finish])
+												if not (check in word_hyp):
+													word_hyp[it].append(substring[:unknown_finish])
+													first_variant = False
+													unknown_count[it]+=1
 											else:
 												boof2 = mem[:]
 												boof2.append(substring[:unknown_finish])
@@ -167,14 +171,21 @@ def Make_hyp (hashtag, my_dict):
 						if not (ibegin+unknown_finish >= len(hashtag)):
 							flag = True
 							boof = first_word_hyp_existing(substring, my_dict)
-							mem = word_hyp[it][:]
-							word_hyp[it].append(boof[0])
-							for word in boof[1:]:
-								boof2 = mem[:]
-								boof2.append(word)
-								if not(boof2 in word_hyp):
-									word_hyp.append(boof2)
-									unknown_count.append(unknown_count[it])
+							f = False
+							for word in boof:
+								if not f:
+									mem = word_hyp[it][:]
+									check = mem[:]
+									check.append(word)
+									if not (check in word_hyp):
+										word_hyp[it].append(word)
+										f = True
+								else:
+									boof2 = mem[:]
+									boof2.append(word)
+									if not(boof2 in word_hyp):
+										word_hyp.append(boof2)
+										unknown_count.append(unknown_count[it])
 
 			it+=1
 						
@@ -191,30 +202,6 @@ def Make_hyp (hashtag, my_dict):
 # print( Methrics.methric_count(h), h )
 
 
-def segmentation_test(splitted, joined):
-
-	my_dict = Dict_creator.Dict_form('/home/corra/Documents/VKR/zaliznjak.txt')
-	print('Dictionary was successfuly formed!')
-	
-	s = open(splitted)
-	j = open(joined)
-	b = open ('/home/corra/Documents/VKR/bad.txt', 'w')
-	total = 0
-	success = 0
-	
-	for j_line in j:
-		s_line = s.readline()
-		total+=1
-		print(total)
-		j_line = j_line[:len(j_line)-1]
-		s_line = s_line[:len(s_line)-1]
-
-		if s_line in Make_hyp(j_line, my_dict):
-			success+=1
-		else:
-			b.write(s_line + '\n')
-	b.close()
-	print("hashtags processed: ",total, " \n hashtags splitted correctly: ", success, "\n occurancy: ", (success/total)*100, "% \n")
 
 
 # segmentation_test('/home/corra/Documents/VKR/splittedHashtagsTest.txt', '/home/corra/Documents/VKR/joinedHashtagsTest.txt')
