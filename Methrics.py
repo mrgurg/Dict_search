@@ -14,7 +14,7 @@ def methric_count(segmentation_list):
 		functional_words = 0
 		number_of_words = 0
 		link_rate = 0
-		
+		len_of_unfunctional = 0
 		number_of_words = len(line.split())
 
 		grammar_information = stemmer.analyze(line)
@@ -28,6 +28,7 @@ def methric_count(segmentation_list):
 		while {'text' : ' '} in grammar_information:
 			grammar_information.pop(grammar_information.index({'text' : ' '}))
 		for info in grammar_information:
+
 			if 'analysis' in info.keys():
 				if len( info['analysis'])==0:
 					unknown_words+=1
@@ -39,10 +40,11 @@ def methric_count(segmentation_list):
 					for f in functional_list:
 						if grammar.find(f+'=', 0,  5) > -1 or grammar.find(f+',', 0, 5) > -1:
 							functional_words+=1
-							break
+						else:
+							len_of_unfunctional+=len(info['text'])
 							
 
-		methric_list.append([link_rate, unknown_words, (number_of_words - functional_words)/number_of_words])
+		methric_list.append([link_rate, unknown_words, (number_of_words - functional_words)/number_of_words, len_of_unfunctional/(number_of_words - functional_words+1)])
 
 	return methric_list 
 

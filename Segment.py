@@ -101,13 +101,13 @@ def Make_hyp (hashtag, my_dict):
 					
 				if ibegin < len(hashtag):
 					substring = hashtag[ibegin:]
-					# if unknown_count[it] == 0:
-					# 	boof = word_hyp[it][:]
-					# 	boof.append(substring)
-					# 	if not (boof in word_hyp):
-					# 		word_hyp.append(boof)
-					# 		unknown_count.append(0)
-					# 		flag = True
+					if unknown_count[it] == 0:
+						boof = word_hyp[it][:]
+						boof.append(substring)
+						if not (boof in word_hyp):
+							word_hyp.append(boof)
+							unknown_count.append(0)
+							flag = True
 
 					unknown_finish = 0
 					if first_word_hyp_existing(substring, my_dict) == []:
